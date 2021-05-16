@@ -1,0 +1,9 @@
+env/*
+Configs/Missions/dayzOffline.enoch/storage_1/*
+*.log
+*.rpt
+*.ADM
+Configs/Profile/BreachingCharge/logs/*
+
+Configs/Profile/Users/*
+Configs/Profile/DataCache/cache.ch
