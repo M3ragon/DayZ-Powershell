@@ -13,17 +13,8 @@ $ModDirSteam = "H:\SteamLibrary\steamapps\common\DayZServer\steamapps\workshop\c
 #$ModDirDZSA = "H:\SteamLibrary\steamapps\common\DayZ\!dzsal\"
 $mods= @(
     [pscustomobject]@{ModID='1559212036';ModName='@CF'}
-    #[pscustomobject]@{ModID='0000000000';ModName='MODNAME'}
-    #[pscustomobject]@{ModID='0000000000';ModName='MODNAME'}
-    #[pscustomobject]@{ModID='0000000000';ModName='MODNAME'}
-    #[pscustomobject]@{ModID='0000000000';ModName='MODNAME'}
-    #[pscustomobject]@{ModID='0000000000';ModName='MODNAME'}
-    #[pscustomobject]@{ModID='0000000000';ModName='MODNAME'}
-    #[pscustomobject]@{ModID='0000000000';ModName='MODNAME'}
-    #[pscustomobject]@{ModID='0000000000';ModName='MODNAME'}
-    #[pscustomobject]@{ModID='0000000000';ModName='MODNAME'}
-    #[pscustomobject]@{ModID='0000000000';ModName='MODNAME'}
-    #[pscustomobject]@{ModID='0000000000';ModName='MODNAME'}
+    [pscustomobject]@{ModID='1680019590';ModName='@Server_Information_Panel'}
+    [pscustomobject]@{ModID='1564026768';ModName='@C-O-T'}
 )
 $ListMods = for ($Modlister = 0; $Modlister -lt $mods.count; $Modlister++){
     "$ModDirSteam{0};" -f $mods.ModID[$Modlister]
@@ -79,7 +70,7 @@ for ($i = 0; $i -lt $mods.count; $i++){
     $CopyServerKeyPath = $ModDirSteam + $mods.ModID[$i]
     Get-ChildItem -Path "$CopyServerKeyPath" -Include *.bikey -Recurse | Copy-Item -Destination "$ExePath\keys"
 }
-Start-Sleep 1
+Write-Host "Copy all Serverkeys"
 #################################################################
 ########## Move Logs
 #################################################################
@@ -90,13 +81,13 @@ $LogPath2 = $ExePath + "ServerLogs"
 Move-Item -Path $LogPath\*.RPT -Destination $LogPath2 
 Move-Item -Path $LogPath\*.log -Destination $LogPath2 
 Start-Sleep 1
-
+Write-Host "Remove/Moved old Logs"
 #################################################################
 ########## Create Symlinks for Mods
 #################################################################
 
 $strings=@("@*")
-Set-Location ($ExePath); Get-Childitem -Include ($strings) -Recurse -force | Remove-Item -Force -Recurse 
+Get-Childitem -Path "$ExePath" -Include ($strings) -Recurse -force | Remove-Item -Force -Recurse 
 Start-Sleep 2
 Write-Host "Remove old Mods"
 <#Working Create Symlink #>
@@ -106,7 +97,7 @@ for ($i = 0; $i -lt $mods.count; $i++){
     New-Item -ItemType Junction -Path $Destination -Target $Target
 }
 Write-Host "Create neu Symlinks"
-Start-Sleep 2
+Start-Sleep 1
 #################################################################
 ########## START DayZServer
 #################################################################

@@ -16,24 +16,17 @@ $DayZServerPath = "H:\SteamLibrary\steamapps\common\DayZServer"
 # Same as $mods and $ServerMod from "Start-DayZServer.ps1"
 $WorkshopItemListNew = @(
     [pscustomobject]@{ModID='1559212036';ModName='@CF'}
-    #[pscustomobject]@{ModID='0000000000';ModName='MODNAME'}
-    #[pscustomobject]@{ModID='0000000000';ModName='MODNAME'}
-    #[pscustomobject]@{ModID='0000000000';ModName='MODNAME'}
-    #[pscustomobject]@{ModID='0000000000';ModName='MODNAME'}
-    #[pscustomobject]@{ModID='0000000000';ModName='MODNAME'}
-    #[pscustomobject]@{ModID='0000000000';ModName='MODNAME'}
-    #[pscustomobject]@{ModID='0000000000';ModName='MODNAME'}
-    #[pscustomobject]@{ModID='0000000000';ModName='MODNAME'}
-    #[pscustomobject]@{ModID='0000000000';ModName='MODNAME'}
-    #[pscustomobject]@{ModID='0000000000';ModName='MODNAME'}
-    #[pscustomobject]@{ModID='0000000000';ModName='MODNAME'}
+    [pscustomobject]@{ModID='1680019590';ModName='@Server_Information_Panel'}
+    [pscustomobject]@{ModID='1564026768';ModName='@C-O-T'}
 )
 $ListMods = for ( $WorkshopID = 0; $WorkshopID -lt $WorkshopItemListNew.count; $WorkshopID++){
     "+workshop_download_item $SteamAppID {0}" -f $WorkshopItemListNew.ModID[$WorkshopID]
 }
 
 $ArgList =@(
-    "+login $SteamLogin $SteamPassword",
+    "+login $SteamLogin $SteamPassword $SteamGuardCode", #First Login
+    #"+login $SteamLogin $SteamPassword", #After first Login
+    # $SteamGuardCode is only needed for the first Login on a new maschine.
     "+force_install_dir $DayZServerPath",
     "$ListMods",
     "+quit"
